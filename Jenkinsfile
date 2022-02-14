@@ -1,28 +1,28 @@
 node {
-				def app
+			def app
 
-				stage('Clone repository') {
-				  
+			stage('Clone repository') {
+			  
 
-					checkout scm
-				}
+				checkout scm
+			}
 
-				stage('Update GIT') {
-						script {
-							catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-								withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-									//def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
-									sh "git config user.email kailashtambe@gmail.com"
-									sh "git config user.name kailastambe"
-									//sh "git switch master"
-									sh "cat deployment.yaml"
-									sh "sed -i 's+kaialstambe/test.*+kailastambe/test:${DOCKERTAG}+g' deployment.yaml"
-									sh "cat deployment.yaml"
-									sh "git add ."
-									sh "git commit -m 'Done by Jenkins Job changemanifest: ${env.BUILD_NUMBER}'"
-									sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/kubernetesmanifest.git HEAD:main"
-				  }
-				}
+			stage('Update GIT') {
+					script {
+						catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+							withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+								//def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
+								//sh "git config user.email kailastambe2212@gmail.com"
+								//sh "git config user.name kailastambe"
+								//sh "git switch master"
+								sh "cat deployment.yaml"
+								sh "sed -i 's+kailastambe/upload.*+kaialstambe/upload:${DOCKERTAG}+g' deployment.yaml"
+								sh "cat deployment.yaml"
+								sh "git add ."
+								sh "git commit -m 'Done by Jenkins Job changemanifest: ${env.BUILD_NUMBER}'"
+								sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/kubernetesmanifest.git HEAD:main"
 			  }
 			}
-			}
+		  }
+		}
+		}
